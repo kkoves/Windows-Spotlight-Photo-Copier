@@ -18,9 +18,13 @@ import shutil
 
 #import cv2
 
-source_dir=os.path.join(os.environ['LOCALAPPDATA'], 'Packages', 'Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy', 'LocalState', 'Assets', '')
-destination_dir=os.path.join(os.environ['USERPROFILE'], 'Desktop', 'Windows Spotlight Photos', '')
+#source_dir=os.path.join(os.environ['LOCALAPPDATA'], 'Packages', 'Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy', 'LocalState', 'Assets', '')
+#destination_dir=os.path.join(os.environ['USERPROFILE'], 'Desktop', 'Windows Spotlight Photos', '')
 
+user_folder = input("Path to Windows user profile folder: ")
+
+source_dir = os.path.join(user_folder, 'AppData', 'Local', 'Packages', 'Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy', 'LocalState', 'Assets', '')
+destination_dir = os.path.join(user_folder, 'Desktop', 'Windows Spotlight Images', '')
 
 if not os.path.exists(destination_dir):
     os.makedirs(destination_dir)
@@ -28,13 +32,14 @@ if not os.path.exists(destination_dir):
 source_file_list = os.listdir(source_dir)
 destination_file_list = os.listdir(destination_dir)
 
-
 #print(os.environ)
 #for var in os.environ:
 #    print(var)
 #    print(os.environ[var])
+
 for file in source_file_list:
     if(os.path.getsize(os.path.join(source_dir,file)) >= 200000):
         shutil.copy2(os.path.join(source_dir, file), os.path.join(destination_dir, file+".jpg"))
     #print(os.path.getsize(os.path.join(source_dir,file)))
 
+print(f"Files copied to {destination_dir}")
